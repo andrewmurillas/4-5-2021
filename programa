@@ -1,0 +1,107 @@
+C1 = 'OFCDFRQITDYLLWZR'
+C2 = 'OYPACCDMQEHHDLRV'
+C3 = 'CSGPNCBQHQBZWHZI'
+
+# Conerting keys to binario
+C1b = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+C2b = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+C3b = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+#Convertimos las llaves a decimal
+alfabeto = {
+    "A": 0,
+    "B": 1,
+    "C": 2,
+    "D": 3,
+    "E": 4,
+    "F": 5,
+    "G": 6,
+    "H": 7,
+    "I": 8,
+    "J": 9,
+    "K": 10,
+    "M": 11,
+    "N": 12,
+    "L": 13,
+    "O": 14,
+    "P": 15,
+    "Q": 16,
+    "R": 17,
+    "S": 18,
+    "T": 19,
+    "U": 20,
+    "V": 21,
+    "W": 22,
+    "X": 23,
+    "Y": 24,
+    "Z": 25
+}
+
+i = 0
+for c in C1:
+    C1b[i] = alfabeto[c]
+    i += 1
+
+i = 0
+for c in C2:
+    C2b[i] = alfabeto[c]
+    i += 1
+
+i = 0
+for c in C3:
+    C3b[i] = alfabeto[c]
+    i += 1
+M1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+M2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+K = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+
+#Realizamos las operaciones xor
+i = 0
+for c1 in C1b[:]:
+    M1[i] = c1 ^ C3b[i]
+
+    i += 1
+
+i = 0
+for c1 in C1b[:]:
+    K[i] = c1 ^ M1[i]
+
+    i += 1
+
+i = 0
+for c2 in C2b[:]:
+    M2[i] = c2 ^ M2[i]
+
+    i += 1
+
+#Mostramos los resultados
+inv_map = {v: k for k, v in alfabeto.items()}
+
+print("M1: ", end="")
+for m1 in M1:
+    if m1 > 26:
+        m1 = m1 - 26
+    elif m1 < 1:
+        m1 += 26
+    print(inv_map[m1], end="")
+print()
+
+print("M2: ", end=" ")
+for m2 in M2:
+    if m2 > 26:
+        m2 = m2 - 26
+    elif m2 < 1:
+        m2 += 26
+    print(inv_map[m2], end="")
+print()
+
+print("k: ", end="")
+for k in K:
+    if k > 26:
+        k = k - 26
+    elif k < 1:
+        k += 26
+    print(inv_map[k], end="")
+print()
+
